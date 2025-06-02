@@ -46,12 +46,44 @@ def main(request):
   return HttpResponse(template.render())
 
 def testing(request):
-  mymembers = Member.objects.all().values()
+  # mydata = Member.objects.all().values()
+  # SQL=SELECT * FROM members WHERE firstname = 'Emil';
+  # mydata = Member.objects.filter(lastname='Refsnes', id=2).values()
+  # SQL=SELECT * FROM members WHERE lastname = 'Refsnes' AND id = 2;
+  # mydata = Member.objects.filter(firstname='Emil').values() | Member.objects.filter(firstname='Tobias').values()
+  # SQL=SELECT * FROM members WHERE firstname = 'Emil' OR firstname = 'Tobias';
+  # mydata = Member.objects.values_list('firstname')
+  # mymembers = Member.objects.all().values()
+
+
+
+  # Use the __startswith keyword:
+  # .filter(firstname__startswith='L');
+  # SQL WHERE firstname LIKE 'L%'
+  # mydata = Member.objects.filter(firstname__startswith='L').values()
+
+
+
+# Order the result alphabetically by firstname:uses the order_by() method:
+# mydata = Member.objects.all().order_by('firstname').values()
+# SELECT * FROM members ORDER BY firstname;
+
+# Order the result firstname descending:
+# mydata = Member.objects.all().order_by('-firstname').values()
+# SELECT * FROM members ORDER BY firstname DESC;
+
+# Order the result first by lastname ascending, then descending on id:
+# mydata = Member.objects.all().order_by('lastname', '-id').values()
+# SELECT * FROM members ORDER BY lastname ASC, id DESC;
+
+
+  mydata = Member.objects.filter(firstname='Emil').values()
   template = loader.get_template('template.html')
   context = {
      'firstname': 'Linus',
     'fruits': ['Apple', 'Banana', 'Cherry'],  
-    'mymembers': mymembers, 
+    # 'mymembers': mymembers, 
+    'mymembers': mydata,
   }
   return HttpResponse(template.render(context, request))
     

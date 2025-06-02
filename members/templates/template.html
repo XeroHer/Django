@@ -1,6 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
+
 <html>
+    <link rel="stylesheet" href="{% static 'static.css' %}">
 <body>
+{% include "footer.html" with me="BIKESH" sponsor="W3SCHOOLS" %}
+
+<h1>Welcome</h1>
+
+<p>This is my webpage</p>
+
+
 {% with firstname="Tobias" %}
 <h1>Hello {{ firstname }}, how are you?</h1>
 {% endwith %}
@@ -18,5 +28,29 @@
   <h1>Bye</h1>
 {% endif %}
 
+
+<p>This page contains a footer in a template.</p>
+
+{% include 'footer.html' %} 
+
+
+p>The queryset object:</p>
+{{ mymembers }}
+
+<table border='1'>
+  <tr>
+    <th>ID</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+  </tr>
+  {% for x in mymembers %}
+    <tr>
+      <td>{{ x.id }}</td>
+        <td>{{ x.firstname }}</td>
+      <td>{{ x.lastname }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<p>In views.py you can see how to import and fetch members from the database.</p>
 </body>
 </html>
