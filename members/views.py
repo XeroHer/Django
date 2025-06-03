@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import Member
+from .models import Contact
 
 def home(request):
   context={'name':'Bikesh', 'course':'IT'}
@@ -21,9 +22,22 @@ def project(request):
 
 def contact(request):
   if request.method=="POST":
-    print("This is post")
+    first = request.POST.get("firstname")
+    last = request.POST.get("lastname")
+    country = request.POST.get("country")
+    subject = request.POST.get("subject")
+    # Save to database
+    sav=Contact(
+            firstname=first,
+            lastname=last,
+            country=country,
+            subject=subject
+        )
+    sav.save()
+  print("Form submitted and data saved.")
   template = loader.get_template('contact.html')
-  return HttpResponse(template.render(),request)
+  context={}
+  return HttpResponse(template.render(context,request))
 
 def members(request):
   mymembers = Member.objects.all().values()
